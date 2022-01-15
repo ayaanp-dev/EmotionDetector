@@ -12,31 +12,36 @@ data = pd.read_csv("tweet_emotions.csv")
 
 x = data["content"]
 y = data["sentiment"]
-# y_new = []
+y_new = []
 
-# for count, i in enumerate(y):
-#     if i == "empty":
-#         y_new.append(0)
-#     elif i == "sadness":
-#         y_new.append(1)
-#     elif i == "enthusiasm":
-#         y_new.append(2)
-#     elif i == "neutral":
-#         y_new.append(3)
-#     elif i == "worry":
-#         y_new.append(4)
-#     elif i == "love":
-#         y_new.append(5)
-#     elif i == "fun":
-#         y_new.append(6)
-#     elif i == "hate":
-#         y_new.append(7)
+for count, i in enumerate(y):
+    if i == "empty":
+        y_new.append(0)
+    elif i == "sadness":
+        y_new.append(1)
+    elif i == "enthusiasm":
+        y_new.append(2)
+    elif i == "neutral":
+        y_new.append(3)
+    elif i == "worry":
+        y_new.append(4)
+    elif i == "love":
+        y_new.append(5)
+    elif i == "fun":
+        y_new.append(6)
+    elif i == "hate":
+        y_new.append(7)
+    else:
+        del x[count]
 
-# y = y_new
-#
+y = y_new
+
+print(len(x), len(y))
+
 vectorizer = HashingVectorizer(n_features=12)
 x = vectorizer.transform(x).toarray()
 
+x = np.reshape(x, (x.shape[0], 1, x.shape[1]))
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, shuffle=True)
 
